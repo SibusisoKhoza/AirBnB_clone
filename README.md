@@ -109,15 +109,13 @@ user@ubuntu:~/AirBnB$ ./console.py
 49faff9a-6318-451f-87b6-910505c55907
 user@ubuntu:~/AirBnB$ ./console.py
 
-or
 
+or
 user@ubuntu:~/AirBnB$ ./console.py $ echo "create BaseModel" | ./console.py
 (hbnb)
 e37ebcd3-f8e1-4c1f-8095-7a019070b1fa
 (hbnb)
 user@ubuntu:~/AirBnB$ ./console.py
-Available commands and what they do
-The recognizable commands by the interpreter are the following:
 
 Command	Description
 quit or EOF	Exits the program
