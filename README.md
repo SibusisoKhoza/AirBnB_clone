@@ -148,4 +148,4 @@ Authors
 
 Amal Hadraoui | [Github](https://github.com/amalia8029)
 
-Sibusiso Khoza | Github: 
+Sibusiso Khoza | [Github](https://github.com/SibusisoKhoza) 
