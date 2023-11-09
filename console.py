@@ -62,6 +62,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             print(storage.all()[key])
 
+
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
         args = arg.split()
@@ -92,6 +93,11 @@ class HBNBCommand(cmd.Cmd):
             print(instances)
         elif args[0] not in storage.classes():
             print("** class doesn't exist **")
+        else:
+            for key, value in storage.all().items():
+                if args[0] == key.split('.')[0]:
+                    instances.append(str(value))
+            print(instances)
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
@@ -136,6 +142,7 @@ class HBNBCommand(cmd.Cmd):
             except Exception as e:
                 print(e)
 
+
     def do_count_state(self, arg):
         """Counts the number of instances of the State class"""
         self.do_count("State " + arg)
@@ -155,6 +162,20 @@ class HBNBCommand(cmd.Cmd):
     def do_count_review(self, arg):
         """Counts the number of instances of the Review class"""
         self.do_count("Review " + arg)
+
+    def do_all(self, arg):
+        """Prints all instances of a class"""
+        args = arg.split()
+        if not args:
+            print("** class name missing **")
+        else:
+            try:
+                class_name = args[0]
+                instances = storage.all_by_class(class_name)
+                print(instances)
+            except Exception as e:
+                print(e)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
