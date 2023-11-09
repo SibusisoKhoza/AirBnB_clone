@@ -13,7 +13,7 @@ class FileStorage:
     """
     __file_path = "file.json"
     __objects = {}
-    classes = {
+    _classes = {
         'BaseModel': BaseModel,
         'User': User,
         'State': State,
@@ -48,7 +48,7 @@ class FileStorage:
                 json_data = json.load(file)
                 for key, value in json_data.items():
                     class_name, obj_id = key.split('.')
-                    obj_cls = FileStorage.classes[class_name]  # Use FileStorage.classes
+                    obj_cls = FileStorage._classes[class_name]  # Use FileStorage._classes
                     obj = obj_cls(**value)
                     FileStorage.__objects[key] = obj
         except FileNotFoundError:
@@ -63,9 +63,9 @@ class FileStorage:
         return count
     
     def all_by_class(self, cls):
-            """Returns a dictionary of objects of the given class."""
-            all_objects = self.all()
-            return {k: v for k, v in all_objects.items() if isinstance(v, cls)}
+        """Returns a dictionary of objects of the given class."""
+        all_objects = self.all()
+        return {k: v for k, v in all_objects.items() if isinstance(v, cls)}
     
     def classes(self):
         """Returns a dictionary of all available classes."""
