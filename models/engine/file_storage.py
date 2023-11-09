@@ -66,3 +66,7 @@ class FileStorage:
             """Returns a dictionary of objects of the given class."""
             all_objects = self.all()
             return {k: v for k, v in all_objects.items() if isinstance(v, cls)}
+    
+    def classes(self):
+        """Returns a dictionary of all available classes."""
+        return FileStorage.__objects
