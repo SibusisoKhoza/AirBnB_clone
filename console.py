@@ -73,15 +73,19 @@ class HBNBCommand(cmd.Cmd):
                 class_name = args[0]
                 instance_id = args[1]
                 key = class_name + "." + instance_id
-                del storage.all()[key]
-                storage.save()
+                if key in storage.all():
+                    del storage.all()[key]
+                    storage.save()
+                else:
+                    print("** no instance found **")
             except IndexError:
                 if class_name not in storage.classes():
                     print("** class doesn't exist **")
                 elif len(args) < 2:
                     print("** instance id missing **")
-                elif key not in storage.all():
+                else:
                     print("** no instance found **")
+
 
     def do_all(self, arg):
         """Prints all string representation of all instances"""
@@ -114,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
                 instance = storage.all().get(key)
                 if instance:
                     setattr(instance, attribute_name, attribute_value)
-                    storage.save()
+                    instance.save()
                 else:
                     print("** no instance found **")
             except IndexError:
