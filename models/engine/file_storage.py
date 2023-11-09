@@ -48,11 +48,12 @@ class FileStorage:
                 json_data = json.load(file)
                 for key, value in json_data.items():
                     class_name, obj_id = key.split('.')
-                    obj_cls = getattr(self.classes, class_name)
+                    obj_cls = self.classes[class_name]  # Fix this line
                     obj = obj_cls(**value)
                     FileStorage.__objects[key] = obj
         except FileNotFoundError:
             pass
+
 
     def count(self, class_name):
         """Count the number of instances of a class"""
