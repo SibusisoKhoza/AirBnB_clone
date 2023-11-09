@@ -6,3 +6,9 @@ class User(BaseModel):
     password = ""
     first_name = ""
     last_name = ""
+
+    @classmethod
+    def count(cls):
+        """Returns the number of instances of User"""
+        user_instances = [obj for obj in storage.all().values() if isinstance(obj, cls)]
+        return len(user_instances)

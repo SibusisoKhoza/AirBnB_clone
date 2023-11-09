@@ -1,16 +1,10 @@
-#!/usr/bin/python3
-"""This is the file storage class for AirBnB"""
-import json
-from models import base_model
-from models.user import User
 from models.base_model import BaseModel
+from models.user import User
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-
-
 
 
 class FileStorage:
@@ -20,13 +14,13 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
     classes = {
-    'BaseModel': BaseModel,
-    'User': User,
-    'State': State,
-    'City': City,
-    'Amenity': Amenity,
-    'Place': Place,
-    'Review': Review,
+        'BaseModel': BaseModel,
+        'User': User,
+        'State': State,
+        'City': City,
+        'Amenity': Amenity,
+        'Place': Place,
+        'Review': Review,
     }
 
     def all(self):
@@ -59,3 +53,11 @@ class FileStorage:
                     FileStorage.__objects[key] = obj
         except FileNotFoundError:
             pass
+
+    def count(self, class_name):
+        """Count the number of instances of a class"""
+        count = 0
+        for key in self.__objects:
+            if class_name in key:
+                count += 1
+        return count

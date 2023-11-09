@@ -6,6 +6,12 @@ import cmd
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
@@ -117,6 +123,39 @@ class HBNBCommand(cmd.Cmd):
                     print("** attribute name missing **")
                 elif len(args) < 5:
                     print("** value missing **")
+
+    def do_count(self, arg):
+        """Counts the number of instances of a class"""
+        args = arg.split()
+        if not args:
+            print("** class name missing **")
+        else:
+            try:
+                class_name = args[0]
+                count = storage.count(class_name)
+                print(count)
+            except Exception as e:
+                print(e)
+
+    def do_count_state(self, arg):
+        """Counts the number of instances of the State class"""
+        self.do_count("State " + arg)
+
+    def do_count_city(self, arg):
+        """Counts the number of instances of the City class"""
+        self.do_count("City " + arg)
+
+    def do_count_amenity(self, arg):
+        """Counts the number of instances of the Amenity class"""
+        self.do_count("Amenity " + arg)
+
+    def do_count_place(self, arg):
+        """Counts the number of instances of the Place class"""
+        self.do_count("Place " + arg)
+
+    def do_count_review(self, arg):
+        """Counts the number of instances of the Review class"""
+        self.do_count("Review " + arg)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
