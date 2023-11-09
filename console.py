@@ -104,34 +104,40 @@ class HBNBCommand(cmd.Cmd):
             print(instances)
 
     def do_update(self, arg):
-        """Updates an instance based on the class name and id"""
+        """Updates an instance based on the class name and ID"""
         args = arg.split()
-        if not args:
+        if len(args) == 0:
             print("** class name missing **")
-        else:
-            try:
-                class_name = args[0]
-                instance_id = args[1]
-                attribute_name = args[2]
-                attribute_value = args[3]
-                key = class_name + "." + instance_id
-                instance = storage.all().get(key)
-                if instance:
-                    setattr(instance, attribute_name, attribute_value)
-                    instance.save()
-                else:
-                    print("** no instance found **")
-            except IndexError:
-                if class_name not in storage.classes():
-                    print("** class doesn't exist **")
-                elif len(args) < 2:
-                    print("** instance id missing **")
-                elif key not in storage.all():
-                    print("** no instance found **")
-                elif len(args) < 4:
-                    print("** attribute name missing **")
-                elif len(args) < 5:
-                    print("** value missing **")
+            return
+        if args[0] not in self.classes:
+            print("** class doesn't exist **")
+            return
+        if len(args) < 2:
+            print("** instance id missing **")
+            return
+        key = "{}.{}".format(args[0], args[1])
+        if key not in storage.all():
+            print("** no instance found **")
+            return
+        if len(args) < 3:
+            print("** attribute name missing **")
+            return
+        if len(args) < 4:
+            print("** value missing **")
+            return
+
+        instance = storage.all()[key]
+        attribute = args[3]
+        value = args[4]
+
+        # Update instance with attribute and value from dictionary
+        instance_dict = instance.to_dict()
+        instance_dict[attribute] = value
+
+        # Update instance attributes and save to JSON file
+        for k, v in instance_dict.items():
+            setattr(instance, k, v)
+        instance.save()
 
     def do_count(self, arg):
         """Counts the number of instances of a class"""
