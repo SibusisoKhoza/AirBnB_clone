@@ -184,7 +184,7 @@ class HBNBCommand(cmd.Cmd):
                 instances = storage.all_by_class(class_name)
                 print(instances)
             except Exception as e:
-                print(e)
+                print("** class name missing **")
 
 
 if __name__ == '__main__':
