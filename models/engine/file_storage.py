@@ -55,3 +55,8 @@ class FileStorage:
     def all_by_class(self, cls):
         all_objects = self.all()
         return {k: v for k, v in all_objects.items() if isinstance(v, cls)}
+    
+    @staticmethod
+    def get_classes():
+        """Returns a dictionary of all available classes."""
+        return FileStorage.classes
