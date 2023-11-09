@@ -2,7 +2,7 @@
 """ Defines the class: BaseModel """
 import uuid
 from datetime import datetime
-from models import storage
+
 
 class BaseModel:
     def __init__(self, *args, **kwargs):
@@ -22,9 +22,10 @@ class BaseModel:
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
+        from models.engine.file_storage import FileStorage
+        storage = FileStorage()
         storage.new(self)
         storage.save()
-
 
     def to_dict(self):
         model_dict = self.__dict__.copy()
