@@ -34,15 +34,16 @@ class FileStorage:
             json.dump(json_dict, file)
 
     def reload(self):
+        """Reloads objects from JSON file"""
         try:
-            with open(FileStorage.__file_path, 'r', encoding='utf-8') as file:
-                json_data = json.load(file)
-                for key, value in json_data.items():
-                    class_name, obj_id = key.split('.')
-                    obj_cls = FileStorage.classes[class_name]  # Use FileStorage.classes
-                    obj = obj_cls(**value)
-                    FileStorage.__objects[key] = obj
-        except FileNotFoundError:
+            with open(FileStorage.__file_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            for key, value in data.items():
+                class_name = key.split('.')[0]
+                instance = eval(class_name)(**value)
+                self.__objects[key] = instance
+            FileStorage.classes = {k: eval(k) for k in data.keys()}
+        except Exception:
             pass
 
     def count(self, class_name):
