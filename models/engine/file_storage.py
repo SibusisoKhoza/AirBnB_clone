@@ -54,8 +54,6 @@ class FileStorage:
         except FileNotFoundError:
             pass
 
-
-
     def count(self, class_name):
         """Count the number of instances of a class"""
         count = 0
@@ -63,3 +61,8 @@ class FileStorage:
             if class_name in key:
                 count += 1
         return count
+    
+    def all_by_class(self, cls):
+            """Returns a dictionary of objects of the given class."""
+            all_objects = self.all()
+            return {k: v for k, v in all_objects.items() if isinstance(v, cls)}
