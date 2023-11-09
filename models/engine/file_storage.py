@@ -1,11 +1,11 @@
-from models.base_model import BaseModel
 from models.user import User
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-
+import json
+from models.base_model import BaseModel
 
 class FileStorage:
     """This class serializes instances to a JSON file and
@@ -48,7 +48,7 @@ class FileStorage:
                 json_data = json.load(file)
                 for key, value in json_data.items():
                     class_name, obj_id = key.split('.')
-                    obj_cls = getattr(base_model, class_name)
+                    obj_cls = getattr(self.classes, class_name)
                     obj = obj_cls(**value)
                     FileStorage.__objects[key] = obj
         except FileNotFoundError:

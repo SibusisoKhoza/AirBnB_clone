@@ -62,7 +62,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             print(storage.all()[key])
 
-
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
         args = arg.split()
