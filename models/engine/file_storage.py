@@ -7,6 +7,8 @@ from models.review import Review
 import json
 from models.base_model import BaseModel
 
+import json
+from models.base_model import BaseModel
 
 class FileStorage:
     __file_path = "file.json"
