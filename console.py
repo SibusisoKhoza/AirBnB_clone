@@ -5,14 +5,7 @@ This is the console for the Airbnb project.
 import cmd
 from models import storage
 from models.base_model import BaseModel
-from models.user import User
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
-import sys
-print(sys.path)
+
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
@@ -62,7 +55,6 @@ class HBNBCommand(cmd.Cmd):
 
         print(storage.all()[key])
 
-
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
         args = arg.split()
@@ -79,13 +71,7 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     print("** no instance found **")
             except IndexError:
-                if class_name not in storage.classes():
-                    print("** class doesn't exist **")
-                elif len(args) < 2:
-                    print("** instance id missing **")
-                else:
-                    print("** no instance found **")
-
+                print("** instance id missing **")
 
     def do_all(self, arg):
         """Prints all string representation of all instances"""
@@ -95,7 +81,7 @@ class HBNBCommand(cmd.Cmd):
             for key, value in storage.all().items():
                 instances.append(str(value))
             print(instances)
-        elif args[0] not in storage.classes():
+        elif args[0] not in storage.get_classes():
             print("** class doesn't exist **")
         else:
             for key, value in storage.all().items():
@@ -109,7 +95,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("** class name missing **")
             return
-        if args[0] not in self.classes:
+        if args[0] not in storage.get_classes():
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -143,7 +129,7 @@ class HBNBCommand(cmd.Cmd):
         """Counts the number of instances of a class"""
         args = arg.split()
         if not args:
-            print("** class name  missing **")
+            print("** class name missing **")
         else:
             try:
                 class_name = args[0]
@@ -151,41 +137,6 @@ class HBNBCommand(cmd.Cmd):
                 print(count)
             except Exception as e:
                 print(e)
-
-
-    def do_count_state(self, arg):
-        """Counts the number of instances of the State class"""
-        self.do_count("State " + arg)
-
-    def do_count_city(self, arg):
-        """Counts the number of instances of the City class"""
-        self.do_count("City " + arg)
-
-    def do_count_amenity(self, arg):
-        """Counts the number of instances of the Amenity class"""
-        self.do_count("Amenity " + arg)
-
-    def do_count_place(self, arg):
-        """Counts the number of instances of the Place class"""
-        self.do_count("Place " + arg)
-
-    def do_count_review(self, arg):
-        """Counts the number of instances of the Review class"""
-        self.do_count("Review " + arg)
-
-    def do_all(self, arg):
-        """Prints all instances of a class"""
-        args = arg.split()
-        if not args:
-            print("** class doesn't exist **")
-        else:
-            try:
-                class_name = args[0]
-                instances = storage.all_by_class(class_name)
-                print(instances)
-            except Exception as e:
-                print("** class doesn't exist **")
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
