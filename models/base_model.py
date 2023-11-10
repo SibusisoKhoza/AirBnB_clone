@@ -27,9 +27,13 @@ class BaseModel:
             self.updated_at = datetime.now()
 
     def __str__(self):
+         """Returns official string representation"""
+
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
+         """updates the public instance attribute updated_at"""
+
         from models.engine.file_storage import FileStorage
         storage = FileStorage()
         storage.new(self)
