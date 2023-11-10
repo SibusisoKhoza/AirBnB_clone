@@ -176,14 +176,14 @@ class HBNBCommand(cmd.Cmd):
         """Prints all instances of a class"""
         args = arg.split()
         if not args:
-            print("** class name missing **")
+            print("** class doesn't exist **")
         else:
             try:
                 class_name = args[0]
                 instances = storage.all_by_class(class_name)
                 print(instances)
             except Exception as e:
-                print("** class name missing **")
+                print("** class doesn't exist **")
 
 
 if __name__ == '__main__':
