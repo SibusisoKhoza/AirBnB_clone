@@ -142,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
         """Counts the number of instances of a class"""
         args = arg.split()
         if not args:
-            print("** class name  missing **")
+            print("** class name missing **")
         else:
             try:
                 class_name = args[0]
