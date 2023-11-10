@@ -32,6 +32,7 @@ class BaseModel:
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
+         """updates the public instance attribute updated_at"""
 
         from models.engine.file_storage import FileStorage
         storage = FileStorage()
@@ -39,7 +40,6 @@ class BaseModel:
         storage.save()
 
     def to_dict(self):
-         """returns a dictionary containing all keys/values of __dict__"""
         model_dict = self.__dict__.copy()
         model_dict['__class__'] = self.__class__.__name__
         model_dict['created_at'] = self.created_at.isoformat()
