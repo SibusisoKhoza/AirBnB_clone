@@ -1,10 +1,19 @@
 #!/usr/bin/python3
-""" Defines the class: BaseModel """
+"""This script is the base model"""
 import uuid
 from datetime import datetime
 
 class BaseModel:
+     """Class from which all other classes will inherit"""
+
     def __init__(self, *args, **kwargs):
+
+          """Initializes instance attributes
+
+        Args:
+            - *args: list of arguments
+            - **kwargs: dict of key-values arguments
+        """
         if kwargs:
             for key, value in kwargs.items():
                 if key != '__class__':
