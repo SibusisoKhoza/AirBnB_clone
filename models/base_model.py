@@ -31,7 +31,9 @@ class BaseModel:
         Returns:
             str: A formatted string.
         """
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        self.name = self.__class__.__name__
+        self.dict = self.id, self.__dict__
+        return "[{}] ({}) {}".format(self.name, self.id, self.dict)
 
     def save(self):
         """
