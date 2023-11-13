@@ -37,7 +37,8 @@ class BaseModel:
         """
         Saves the current instance to the storage.
         """
-        from models.engine.file_storage import FileStorage  # Import here to avoid circular import
+        from models.engine.file_storage import FileStorage
+        # Import here to avoid circular import
         storage = FileStorage()
         storage.new(self)
         storage.save()
