@@ -138,5 +138,29 @@ class HBNBCommand(cmd.Cmd):
             except Exception as e:
                 print(e)
 
+    def do_all_with_method(self, arg):
+        """Prints all instances of a class using <class name>.all() syntax"""
+        args = arg.split()
+
+        if len(args) != 1:
+            print("** Unknown syntax: {}.all()".format(args[0]))
+            return
+
+        class_name = args[0]
+        if class_name not in storage.get_classes():
+            print("** class doesn't exist **")
+        else:
+            instances = storage.all_by_class(class_name)
+            print(instances)
+
+    def default(self, line):
+        """Called on an input line when the command prefix is not recognized."""
+        parts = line.split(".")
+        if len(parts) == 2 and parts[1] == "all()":
+            self.do_all_with_method(parts[0])
+        else:
+            print("*** Unknown syntax: {}".format(line))
+
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
