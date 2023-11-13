@@ -116,6 +116,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 setattr(all_objects[key], args[2], args[3])
                 storage.save()
+
     def do_count(self, arg):
         """Retrieves the number of instances of a class"""
         args = shlex.split(arg)
@@ -128,16 +129,15 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        instance_count = storage.count(classes[class_name])
-        print(instance_count)
-
+        instances = storage.count(class_name)
+        print(instances)
 
     def do_User(self, line):
         """Handles commands related to the User class"""
         args = line.split()
         if args and args[0] == 'count':
-            print(storage.count('User'))
-            return
+            count = storage.count('User')
+            print(count)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
