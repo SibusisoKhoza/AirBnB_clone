@@ -1,18 +1,21 @@
-from models.user import User
+from models.base_model import BaseModel
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 import json
-from models.base_model import BaseModel
-
 
 class FileStorage:
     __file_path = "file.json"
     __objects = {}
     classes = {
         'BaseModel': BaseModel,
+        'State': State,
+        'City': City,
+        'Amenity': Amenity,
+        'Place': Place,
+        'Review': Review,
         # Add other classes as needed
     }
 
@@ -32,14 +35,13 @@ class FileStorage:
             json.dump(json_dict, file)
 
     def reload(self):
-        """Reloads objects from JSON file"""
         try:
             with open(FileStorage.__file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
             for key, value in data.items():
                 class_name = key.split('.')[0]
-                instance = eval(class_name)(**value)
-                self.__objects[key] = instance
+                instance = FileStorage.classes[class_name](**value)
+                FileStorage.__objects[key] = instance
             FileStorage.classes = {k: eval(k) for k in data.keys()}
         except Exception:
             pass
@@ -57,5 +59,4 @@ class FileStorage:
 
     @staticmethod
     def get_classes():
-        """Returns a dictionary of all available classes."""
         return FileStorage.classes
