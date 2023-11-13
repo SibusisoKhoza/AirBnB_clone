@@ -128,6 +128,10 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
+        instance_count = storage.count(classes[class_name])
+        print(instance_count)
+
+
     def do_User(self, line):
         """Handles commands related to the User class"""
         args = line.split()
