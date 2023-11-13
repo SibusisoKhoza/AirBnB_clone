@@ -6,6 +6,7 @@ from models.base_model import BaseModel
 from datetime import datetime
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
+
 class TestBaseModel(unittest.TestCase):
     def setUp(self):
         self.model = BaseModel()
@@ -16,7 +17,8 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(hasattr(self.model, 'updated_at'))
 
     def test_str_representation(self):
-        expected_str = "[BaseModel] ({}) {}".format(self.model.id, self.model.__dict__)
+        self.n = self.model.__dict__
+        expected_str = "[BaseModel] ({}) {}".format(self.model.id, n)
         self.assertEqual(str(self.model), expected_str)
 
     def test_save_method(self):
@@ -39,6 +41,7 @@ class TestBaseModel(unittest.TestCase):
             model_dict['updated_at'],
             self.model.updated_at.isoformat()
         )
+
 
 if __name__ == '__main__':
     unittest.main()
