@@ -27,7 +27,6 @@ class TestBaseModel(unittest.TestCase):
         self.model.save()
         new_created_at = self.model.created_at
         self.assertEqual(original_created_at, new_created_at)
-        #To still debug function
 
     def test_to_dict_method(self):
         model_dict = self.model.to_dict()
