@@ -128,10 +128,12 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-    count = storage.count(class_name)
-    print(count)
-
-
+    def do_User(self, line):
+        """Handles commands related to the User class"""
+        args = line.split()
+        if args and args[0] == 'count':
+            print(storage.count('User'))
+            return
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
