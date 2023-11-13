@@ -154,7 +154,9 @@ class HBNBCommand(cmd.Cmd):
             print(instances)
 
     def default(self, line):
-        """Called on an input line when the command prefix is not recognized."""
+        """Called on an input line when the command
+        prefix is not recognized.
+        """
         parts = line.split(".")
         if len(parts) == 2 and parts[1] == "all()":
             self.do_all_with_method(parts[0])
