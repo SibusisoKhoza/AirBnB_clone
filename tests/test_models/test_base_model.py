@@ -18,7 +18,7 @@ class TestBaseModel(unittest.TestCase):
 
     def test_str_representation(self):
         self.n = self.model.__dict__
-        expected_str = "[BaseModel] ({}) {}".format(self.model.id, n)
+        expected_str = "[BaseModel] ({}) {}".format(self.model.id, self.n)
         self.assertEqual(str(self.model), expected_str)
 
     def test_save_method(self):
