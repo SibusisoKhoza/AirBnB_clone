@@ -139,5 +139,6 @@ class HBNBCommand(cmd.Cmd):
             count = storage.count('User')
             print(count)
 
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
