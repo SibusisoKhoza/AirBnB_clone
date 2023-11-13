@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ test for console"""
-
 import sys
 import models
 import unittest
