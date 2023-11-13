@@ -31,9 +31,8 @@ class BaseModel:
         Returns:
             str: A formatted string.
         """
-        self.name = self.__class__.__name__
-        self.dict = self.id, self.__dict__
-        return "[{}] ({}) {}".format(self.name, self.id, self.dict)
+        class_name = self.__class__.__name__
+        return "[{}] ({}) {}".format(class_name, self.id, self.__dict__)
 
     def save(self):
         """
@@ -41,6 +40,7 @@ class BaseModel:
         """
         from models.engine.file_storage import FileStorage
         # Import here to avoid circular import
+        self.updated_at = datetime.now()  # Update updated_at before saving
         storage = FileStorage()
         storage.new(self)
         storage.save()
