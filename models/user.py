@@ -1,5 +1,4 @@
 from models.base_model import BaseModel
-from models import storage
 
 
 class User(BaseModel):
@@ -12,4 +11,6 @@ class User(BaseModel):
     @classmethod
     def count(cls):
         """Returns the number of instances of User"""
-        return sum(1 for obj in storage.all().values() if isinstance(obj, cls))
+        arr = [obj for obj in storage.all().values() if isinstance(obj, cls)]
+        user_instances = arr
+        return len(user_instances)
