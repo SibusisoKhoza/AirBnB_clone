@@ -11,10 +11,11 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
+from models.user import User
 import shlex
 
 classes = {"BaseModel": BaseModel, "State": State, "City": City,
-           "Amenity": Amenity, "Place": Place, "Review": Review}
+           "Amenity": Amenity, "Place": Place, "Review": Review, "User": User}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -91,7 +92,7 @@ class HBNBCommand(cmd.Cmd):
         elif args[0] not in classes:
             print("** class doesn't exist **")
         else:
-            print([str(obj) for key, obj in all_objects.items() if args[0] in key])
+            print([str(obj) for obj in classes[args[0]].all()])
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
