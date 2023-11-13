@@ -14,6 +14,7 @@ from models.review import Review
 from models.user import User
 import shlex
 
+
 classes = {"BaseModel": BaseModel, "State": State, "City": City,
            "Amenity": Amenity, "Place": Place, "Review": Review, "User": User}
 
@@ -115,6 +116,21 @@ class HBNBCommand(cmd.Cmd):
             else:
                 setattr(all_objects[key], args[2], args[3])
                 storage.save()
+    def do_count(self, arg):
+        """Retrieves the number of instances of a class"""
+        args = shlex.split(arg)
+        if not args:
+            print("** class name missing **")
+            return
+
+        class_name = args[0]
+        if class_name not in classes:
+            print("** class doesn't exist **")
+            return
+
+    count = storage.count(class_name)
+    print(count)
+
 
 
 if __name__ == '__main__':
