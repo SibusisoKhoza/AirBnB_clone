@@ -86,18 +86,22 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """Prints all string representation of all instances"""
+        print("do_all method is executed.")
         args = arg.split()
+        if args and args[0] in storage.get_classes():
+            self.do_all_with_method(args[0])
+            return
         instances = []
         if not args:
             for key, value in storage.all().items():
                 instances.append(str(value))
             print(instances)
-        elif args[0] not in storage.get_classes():
+        elif args[0] not in classes:
             print("** class doesn't exist **")
         else:
-            for key, value in storage.all().items():
-                if args[0] == key.split('.')[0]:
-                    instances.append(str(value))
+            for obj in storage.all().values():
+                if type(obj).__name__ == args[0]:
+                    instances.append(str(obj))
             print(instances)
 
     def do_update(self, arg):
@@ -143,6 +147,19 @@ class HBNBCommand(cmd.Cmd):
         if args and args[0] == 'count':
             count = storage.count('User')
             print(count)
+
+    def do_all_with_method(self, arg):
+        """Prints all instances of a class using <class name>.all() syntax"""
+        args = arg.split()
+        if len(args) != 1:
+            print("** Unknown syntax: {}.all()".format(args[0]))
+            return
+        class_name = args[0]
+        if class_name not in storage.get_classes():
+            print("** class doesn't exist **")
+        else:
+            instances = storage.all_by_class(class_name)
+            print(instances)
 
 
 if __name__ == '__main__':
