@@ -55,8 +55,12 @@ class FileStorage:
         return count
 
     def all_by_class(self, cls):
-        all_objects = self.all()
-        return {k: v for k, v in all_objects.items() if isinstance(v, cls)}
+        """Returns a dictionary of instances of a specific class"""
+        class_objects = {}
+        for key, value in self.__objects.items():
+            if type(value).__name__ == cls:
+                class_objects[key] = value
+        return class_objects
 
     @staticmethod
     def get_classes():

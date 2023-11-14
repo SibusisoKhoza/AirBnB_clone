@@ -154,7 +154,7 @@ class HBNBCommand(cmd.Cmd):
         if class_name not in storage.get_classes():
             print("** class doesn't exist **")
         else:
-            instances = storage.all_by_class(class_name)
+            instances = storage.all_by_class(storage.get_classes()[class_name].__name__)
             print(instances)
 
     def default(self, line):
