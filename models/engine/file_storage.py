@@ -50,7 +50,7 @@ class FileStorage:
     def count(self, class_name):
         count = 0
         for key in self.__objects:
-            if class_name in key:
+            if class_name == key.split('.')[0]:
                 count += 1
         return count
 
