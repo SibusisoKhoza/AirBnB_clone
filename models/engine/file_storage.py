@@ -1,12 +1,10 @@
-from models.user import User
+from models.base_model import BaseModel
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 import json
-from models.base_model import BaseModel
-
 
 
 class FileStorage:
@@ -14,6 +12,11 @@ class FileStorage:
     __objects = {}
     classes = {
         'BaseModel': BaseModel,
+        'State': State,
+        'City': City,
+        'Amenity': Amenity,
+        'Place': Place,
+        'Review': Review,
         # Add other classes as needed
     }
 
@@ -33,14 +36,13 @@ class FileStorage:
             json.dump(json_dict, file)
 
     def reload(self):
-        """Reloads objects from JSON file"""
         try:
             with open(FileStorage.__file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
             for key, value in data.items():
                 class_name = key.split('.')[0]
-                instance = eval(class_name)(**value)
-                self.__objects[key] = instance
+                instance = FileStorage.classes[class_name](**value)
+                FileStorage.__objects[key] = instance
             FileStorage.classes = {k: eval(k) for k in data.keys()}
         except Exception:
             pass
@@ -48,15 +50,18 @@ class FileStorage:
     def count(self, class_name):
         count = 0
         for key in self.__objects:
-            if class_name in key:
+            if class_name == key.split('.')[0]:
                 count += 1
         return count
-    
+
     def all_by_class(self, cls):
-        all_objects = self.all()
-        return {k: v for k, v in all_objects.items() if isinstance(v, cls)}
-    
+        """Returns a dictionary of instances of a specific class"""
+        class_objects = {}
+        for key, value in self.__objects.items():
+            if type(value).__name__ == cls:
+                class_objects[key] = value
+        return class_objects
+
     @staticmethod
     def get_classes():
-        """Returns a dictionary of all available classes."""
         return FileStorage.classes

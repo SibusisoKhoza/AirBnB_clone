@@ -1,5 +1,6 @@
 from models.base_model import BaseModel
 
+
 class User(BaseModel):
     """User class that inherits from BaseModel"""
     email = ""
@@ -10,5 +11,6 @@ class User(BaseModel):
     @classmethod
     def count(cls):
         """Returns the number of instances of User"""
-        user_instances = [obj for obj in storage.all().values() if isinstance(obj, cls)]
+        arr = [obj for obj in storage.all().values() if isinstance(obj, cls)]
+        user_instances = arr
         return len(user_instances)
