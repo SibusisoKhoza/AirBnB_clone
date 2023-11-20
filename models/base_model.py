@@ -3,7 +3,6 @@
 import uuid
 from datetime import datetime
 
-
 class BaseModel:
     def __init__(self, *args, **kwargs):
         """
@@ -16,8 +15,7 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key != '__class__':
                     if key in ['created_at', 'updated_at']:
-                        md = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
-                        setattr(self, key, md)
+                        setattr(self, key, datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f'))
                     else:
                         setattr(self, key, value)
         else:
@@ -31,16 +29,13 @@ class BaseModel:
         Returns:
             str: A formatted string.
         """
-        class_name = self.__class__.__name__
-        return "[{}] ({}) {}".format(class_name, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
         """
         Saves the current instance to the storage.
         """
-        from models.engine.file_storage import FileStorage
-        # Import here to avoid circular import
-        self.updated_at = datetime.now()  # Update updated_at before saving
+        from models.engine.file_storage import FileStorage  # Import here to avoid circular import
         storage = FileStorage()
         storage.new(self)
         storage.save()
